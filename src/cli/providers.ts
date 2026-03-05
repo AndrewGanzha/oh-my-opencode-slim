@@ -1,4 +1,5 @@
 import { DEFAULT_AGENT_MCPS } from '../config/agent-mcps';
+import { CUSTOM_SKILLS } from './custom-skills';
 import { RECOMMENDED_SKILLS } from './skills';
 import type { InstallConfig } from './types';
 
@@ -12,6 +13,28 @@ const AGENT_NAMES = [
 ] as const;
 
 type AgentName = (typeof AGENT_NAMES)[number];
+
+function getDefaultSkillsForAgent(agentName: string): string[] {
+  if (agentName === 'orchestrator') {
+    return ['*'];
+  }
+
+  const skills = [
+    ...RECOMMENDED_SKILLS.filter(
+      (s) => s.allowedAgents.includes('*') || s.allowedAgents.includes(agentName),
+    ).map((s) => s.skillName),
+    ...CUSTOM_SKILLS.filter(
+      (s) => s.allowedAgents.includes('*') || s.allowedAgents.includes(agentName),
+    ).map((s) => s.name),
+  ];
+
+  // Keep browser automation available for designer defaults.
+  if (agentName === 'designer' && !skills.includes('agent-browser')) {
+    skills.push('agent-browser');
+  }
+
+  return [...new Set(skills)];
+}
 
 // Model mappings by provider priority
 export const MODEL_MAPPINGS = {
@@ -102,21 +125,7 @@ export function generateAntigravityMixedPreset(
     agentName: string,
     modelInfo: { model: string; variant?: string },
   ) => {
-    const isOrchestrator = agentName === 'orchestrator';
-
-    // Skills: orchestrator gets "*", others get recommended skills for their role
-    const skills = isOrchestrator
-      ? ['*']
-      : RECOMMENDED_SKILLS.filter(
-          (s) =>
-            s.allowedAgents.includes('*') ||
-            s.allowedAgents.includes(agentName),
-        ).map((s) => s.skillName);
-
-    // Special case for designer and agent-browser skill
-    if (agentName === 'designer' && !skills.includes('agent-browser')) {
-      skills.push('agent-browser');
-    }
+    const skills = getDefaultSkillsForAgent(agentName);
 
     return {
       model: modelInfo.model,
@@ -235,14 +244,7 @@ export function generateLiteConfig(
       if (manualConfig) {
         manualPreset[agentName] = {
           model: manualConfig.primary,
-          skills:
-            agentName === 'orchestrator'
-              ? ['*']
-              : RECOMMENDED_SKILLS.filter(
-                  (s) =>
-                    s.allowedAgents.includes('*') ||
-                    s.allowedAgents.includes(agentName),
-                ).map((s) => s.skillName),
+          skills: getDefaultSkillsForAgent(agentName),
           mcps:
             DEFAULT_AGENT_MCPS[agentName as keyof typeof DEFAULT_AGENT_MCPS] ??
             [],
@@ -324,21 +326,7 @@ export function generateLiteConfig(
     agentName: string,
     modelInfo: { model: string; variant?: string },
   ) => {
-    const isOrchestrator = agentName === 'orchestrator';
-
-    // Skills: orchestrator gets "*", others get recommended skills for their role
-    const skills = isOrchestrator
-      ? ['*']
-      : RECOMMENDED_SKILLS.filter(
-          (s) =>
-            s.allowedAgents.includes('*') ||
-            s.allowedAgents.includes(agentName),
-        ).map((s) => s.skillName);
-
-    // Special case for designer and agent-browser skill
-    if (agentName === 'designer' && !skills.includes('agent-browser')) {
-      skills.push('agent-browser');
-    }
+    const skills = getDefaultSkillsForAgent(agentName);
 
     return {
       model: modelInfo.model,

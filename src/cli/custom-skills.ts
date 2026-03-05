@@ -34,6 +34,52 @@ export const CUSTOM_SKILLS: CustomSkill[] = [
     allowedAgents: ['orchestrator', 'explorer'],
     sourcePath: 'src/skills/cartography',
   },
+  {
+    name: 'pinia',
+    description:
+      'Pinia official Vue state management library, type-safe and extensible',
+    allowedAgents: ['designer'],
+    sourcePath: 'src/skills/pinia',
+  },
+  {
+    name: 'vite',
+    description:
+      'Vite build tool configuration, plugin API, SSR, and migration guidance',
+    allowedAgents: ['designer'],
+    sourcePath: 'src/skills/vite',
+  },
+  {
+    name: 'vue',
+    description:
+      'Vue 3 Composition API, script setup macros, and reactivity guidance',
+    allowedAgents: ['designer'],
+    sourcePath: 'src/skills/vue',
+  },
+  {
+    name: 'vue-best-practices',
+    description: 'Comprehensive Vue 3 best practices and common gotchas',
+    allowedAgents: ['designer'],
+    sourcePath: 'src/skills/vue-best-practices',
+  },
+  {
+    name: 'vue-router-best-practices',
+    description: 'Vue Router 4 best practices for routing and guards',
+    allowedAgents: ['designer'],
+    sourcePath: 'src/skills/vue-router-best-practices',
+  },
+  {
+    name: 'vueuse-functions',
+    description:
+      'Decision guide for applying VueUse composables in Vue and Nuxt projects',
+    allowedAgents: ['designer'],
+    sourcePath: 'src/skills/vueuse-functions',
+  },
+  {
+    name: 'web-design-guidelines',
+    description: 'UI and accessibility audit guidelines for web interfaces',
+    allowedAgents: ['designer'],
+    sourcePath: 'src/skills/web-design-guidelines',
+  },
 ];
 
 /**
