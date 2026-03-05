@@ -59,16 +59,9 @@ Usage: bunx oh-my-opencode-slim install [OPTIONS]
        bunx oh-my-opencode-slim models [OPTIONS]
 
 Options:
-  --kimi=yes|no          Kimi API access (yes/no)
-  --openai=yes|no        OpenAI API access (yes/no)
-  --anthropic=yes|no     Anthropic access (yes/no)
-  --copilot=yes|no       GitHub Copilot access (yes/no)
+  --openai=yes|no        OpenAI (ChatGPT) access (yes/no)
   --zai-plan=yes|no      ZAI Coding Plan access (yes/no)
-  --antigravity=yes|no   Antigravity/Google models (yes/no)
-  --chutes=yes|no        Chutes models (yes/no)
-  --opencode-free=yes|no Use OpenCode free models (opencode/*)
   --balanced-spend=yes|no Evenly spread usage across selected providers when score gaps are within tolerance
-  --opencode-free-model  Preferred OpenCode model id or "auto"
   --aa-key               Artificial Analysis API key (optional)
   --openrouter-key       OpenRouter API key (optional)
   --tmux=yes|no          Enable tmux integration (yes/no)
@@ -78,10 +71,14 @@ Options:
   --models-only          Update model assignments only (skip plugin/auth/skills)
   -h, --help             Show this help message
 
+Notes:
+  - This installer supports only OpenAI (ChatGPT) and ZAI Coding Plan.
+  - Legacy provider flags are accepted for backward compatibility but ignored.
+
 Examples:
   bunx oh-my-opencode-slim install
   bunx oh-my-opencode-slim models
-  bunx oh-my-opencode-slim install --no-tui --kimi=yes --openai=yes --anthropic=yes --copilot=no --zai-plan=no --antigravity=yes --chutes=no --opencode-free=yes --balanced-spend=yes --opencode-free-model=auto --aa-key=YOUR_AA_KEY --openrouter-key=YOUR_OR_KEY --tmux=no --skills=yes
+  bunx oh-my-opencode-slim install --no-tui --openai=yes --zai-plan=yes --balanced-spend=yes --aa-key=YOUR_AA_KEY --openrouter-key=YOUR_OR_KEY --tmux=no --skills=yes
 `);
 }
 
