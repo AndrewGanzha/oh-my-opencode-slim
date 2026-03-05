@@ -238,6 +238,17 @@ describe('skill permissions', () => {
       ?.skill as Record<string, string>;
     expect(skillPerm?.['requesting-code-review']).toBe('allow');
   });
+
+  test('designer gets frontend custom skills allowed by default', () => {
+    const agents = createAgents();
+    const designer = agents.find((a) => a.name === 'designer');
+    expect(designer).toBeDefined();
+    const skillPerm = (designer?.config.permission as Record<string, unknown>)
+      ?.skill as Record<string, string>;
+    expect(skillPerm?.vue).toBe('allow');
+    expect(skillPerm?.pinia).toBe('allow');
+    expect(skillPerm?.['vue-router-best-practices']).toBe('allow');
+  });
 });
 
 describe('isSubagent type guard', () => {
